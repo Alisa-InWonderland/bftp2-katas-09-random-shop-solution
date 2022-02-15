@@ -1,4 +1,10 @@
 import org.junit.jupiter.api.Test;
+import product.Animal;
+import product.Fish;
+import product.GourmetProduct;
+import product.MagicCard;
+
+import java.math.BigDecimal;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -6,48 +12,17 @@ import static org.hamcrest.Matchers.equalTo;
 public class ShoppingCartTest {
 
     @Test
-    void calculatePriceForMagicCards_red() {
+    void calculatesThePriceWithNewProducts() {
+
         ShoppingCart shoppingCart = new ShoppingCart();
 
-        Product product = new Product(null, null, false, "red", null, "Magic: The Gathering - Lightning Bolt", null);
+        shoppingCart.addProduct(new Fish(0.0, "blue")); // 0.1 euro
+        shoppingCart.addProduct(new GourmetProduct(10, false)); // 200 euro
+        shoppingCart.addProduct(new MagicCard("a blue card", "blue"));    // 5 euro
+        shoppingCart.addProduct(new Animal("Araña", 8));    // 33.6 euro
 
-        shoppingCart.addProduct(product);
 
-        assertThat(shoppingCart.getTotalPrice(), equalTo(3.5));
+
+        assertThat(shoppingCart.getTotalPrice(), equalTo(205.1 + 33.6));
     }
-
-    @Test
-    void calculatePriceForMagicCards_blue() {
-        ShoppingCart shoppingCart = new ShoppingCart();
-
-        Product product = new Product(null, null, false, "blue", null, "Magic: The Gathering - Maga Eternal", null);
-
-        shoppingCart.addProduct(product);
-
-        assertThat(shoppingCart.getTotalPrice(), equalTo(5.0));
-    }
-
-    @Test
-    void calculatePriceForWine() {
-        ShoppingCart shoppingCart = new ShoppingCart();
-
-        Product product = new Product(null, 5, false, null, null, "el tio juanillo", null);
-
-
-        shoppingCart.addProduct(product);
-
-        assertThat(shoppingCart.getTotalPrice(), equalTo(100.0));
-    }
-
-    @Test
-    void calculatePriceForCheese() {
-        ShoppingCart shoppingCart = new ShoppingCart();
-
-        Product product = new Product(null, 5, true, null, null, "French Camembert", null);
-
-        shoppingCart.addProduct(product);
-
-        assertThat(shoppingCart.getTotalPrice(), equalTo(50.0));
-    }
-
 }
